@@ -1,6 +1,5 @@
-# TIL
+# TIL(개발 공부 일지)
 
-<h2>개발 공부 일지</h2>
 <h5>JavaScript를 주로 학습하기 때문에 학습 내용은 주로 JavaScript위주의 내용입니다.</h5>
 <h3>나쁜 JavaScript 작성 습관 고치기</h3>
 <p> 
