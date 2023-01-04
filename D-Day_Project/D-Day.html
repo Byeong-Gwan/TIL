@@ -2,7 +2,11 @@
 <html lang="ko">
   <head>
     <title>D-Day</title>
+    <link rel="stylesheet" href="./style.css" />
     <script>
+      const arr = [1, 2, 3];
+      console.log("arr === [1, 2, 3]", arr === [1, 2, 3]);
+
       const dateFormMaker = function () {
         const inputYear = document.querySelector("#target-year-input").value;
         const inputMonth = document.querySelector("#target-month-input").value;
@@ -10,7 +14,7 @@
 
         // const dateFormat = inputYear + "-" + inputMonth + "-" + inputDate;
         const dateFormat = `${inputYear}-${inputMonth}-${inputDate}`;
-        // 템플릿 리터럴
+        // 템플릿 리터럴 `` -> ES6에서 적용가능
 
         return dateFormat;
         // console.log(inputYear + "-" + inputMonth + "-" + inputDate);
@@ -34,10 +38,31 @@
     </script>
   </head>
   <body>
-    <input id="target-year-input" class="target-input" />
-    <input id="target-month-input" class="target-input" />
-    <input id="target-date-input" class="target-input" />
-    <button onclick="counterMaker()">버튼</button>
+    <h1>D-Day</h1>
+    <div id="d-day-container">
+      <div class="d-day-child-container">
+        <span id="days">0</span>
+        <span>일</span>
+      </div>
+      <div class="d-day-child-container">
+        <span id="hours">0</span>
+        <span>시간</span>
+      </div>
+      <div class="d-day-child-container">
+        <span id="min">0</span>
+        <span>분</span>
+      </div>
+      <div class="d-day-child-container">
+        <span id="sec">0</span>
+        <span>초</span>
+      </div>
+    </div>
+    <div id="target-selector">
+      <input id="target-year-input" class="target-input" size="5" /> -
+      <input id="target-month-input" class="target-input" size="5" /> -
+      <input id="target-date-input" class="target-input" size="5" />
+    </div>
+    <button onclick="counterMaker()" id="start-btn">START</button>
     <!-- 버튼 선택 시 counterMaker() 함수 호출 -->
   </body>
 </html>
