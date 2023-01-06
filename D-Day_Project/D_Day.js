@@ -1,5 +1,11 @@
-const messageContainer = document.querySelector("#d-day-message");
+/* ** 코드 작성에 있어서 코드 위치도 중요하다 순차적으로 읽어 가기 때문에
+      코드의 순서에 맞게 함수 선언과 사용을 해야 된다.
+*/
+
+const messageContainer = document.querySelector("#d-day-message"); // message 출력
 const container = document.querySelector("#d-day-container");
+const savedDate = localStorage.getItem("saved-date");
+
 const intervalIdArr = [];
 
 container.style.display = "none";
@@ -18,10 +24,13 @@ const dateFormMaker = function () {
   // console.log(inputYear + "-" + inputMonth + "-" + inputDate);
 };
 
-const counterMaker = function () {
-  const targetDateInput = dateFormMaker();
+const counterMaker = function (date) {
+  if (date !== savedDate) {
+    localStorage.setItem("saved-date", date);
+  }
+  // const targetDateInput = dateFormMaker();
   const nowDate = new Date(); // 현제 시간
-  const targetDate = new Date(targetDateInput).setHours(0, 0, 0, 0);
+  const targetDate = new Date(date).setHours(0, 0, 0, 0);
   // 타겟 날짜까지의 초단위(소수점도 포함 시킴)
   // setHours(0, 0, 0, 0) 함수 사용 이용은 없을 시 오전 9시 기준으로 시간을 계산
   // 자정을 기준으로 시간 계산을 위해서 setHours() 함수 사용
@@ -81,15 +90,28 @@ const counterMaker = function () {
   //   documentObj[docKeys[i]].textContent = remainingObj[timeKeys[i]].textContent;
   // }
 
+  const format = function (time) {
+    if (time < 10) {
+      return "0" + time;
+    } else {
+      return time;
+    }
+  };
+
   // 3.
   let i = 0;
   for (let tag of documentArr) {
-    document.getElementById(tag).textContent = remainingObj[timeKeys[i]];
+    const remainingTime = format(remainingObj[timeKeys[i]]);
+    document.getElementById(tag).textContent = remainingTime;
     i++;
   }
 };
 
-const starter = function () {
+const starter = function (targetDateInput) {
+  if (!targetDateInput) {
+    targetDateInput = dateFormMaker();
+  }
+
   container.style.display = "flex";
   messageContainer.style.display = "none";
 
@@ -99,17 +121,33 @@ const starter = function () {
   //     counterMaker();
   //   }, 1000 * i);
   // }
-  counterMaker(); // 한번 실행 setInterval 실행이 1초 뒤에 실행되는 부분 없에기
-  const intervalId = setInterval(counterMaker, 1000);
+  setClearInterval();
+  counterMaker(targetDateInput); // 한번 실행 setInterval 실행이 1초 뒤에 실행되는 부분 없에기
+  const intervalId = setInterval(() => {
+    counterMaker(targetDateInput);
+  }, 1000);
   intervalIdArr.push(intervalId);
   console.log(intervalIdArr);
 };
 
+// 실행되어 있는 interval 종료해주는 로직
 const setClearInterval = function () {
-  container.style.display = "none";
-  messageContainer.innerHTML = "<h3>D-day를 입력해 주세요.</h3>";
-  messageContainer.style.display = "flex";
+  localStorage.removeItem("saved-date");
   for (let i = 0; i < intervalIdArr.length; i++) {
     clearInterval(intervalIdArr[i]);
   }
 };
+
+const resetTimer = function () {
+  container.style.display = "none";
+  messageContainer.innerHTML = "<h3>D-day를 입력해 주세요.</h3>";
+  messageContainer.style.display = "flex";
+  setClearInterval();
+};
+
+if (savedDate) {
+  starter(savedDate);
+} else {
+  container.style.display = "none";
+  messageContainer.innerHTML = "<h3>D-day를 입력해 주세요.</h3>";
+}
