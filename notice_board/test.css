@@ -1,0 +1,83 @@
+/* 전체 페이지 스타일 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
+}
+
+/* 게시판 제목 스타일 */
+h1 {
+  color: #333;
+  font-size: 36px;
+  text-align: center;
+}
+
+/* 섹션 제목 스타일 */
+h2 {
+  color: #333;
+  font-size: 24px;
+}
+
+/* 폼 요소 스타일 */
+form div {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#post-list {
+  display: block;
+}
+
+input[type="text"],
+textarea {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  width: 20%;
+  box-sizing: border-box;
+}
+li {
+  
+}
+button[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #555;
+}
+
+
+#post-container {
+  display: none;
+}
+
+#post-toggle {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+#post-toggle:hover {
+  background-color: #3e8e41;
+}
+
