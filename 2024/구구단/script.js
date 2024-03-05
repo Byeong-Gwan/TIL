@@ -12,6 +12,12 @@ function gogodan() {
     }
 
     const number = parseInt(numberIndex); // 문자열로 들어올 경우 정수로 변환
+
+    if (number < 1 || number > 9){
+        resultDiv.innerHTML = "숫자는 1부터 9까지 입력하세요.";
+        return;
+    }
+
     let table = '<h2>' + number + ' 단</h2>';
 
     for (let i = 1; i < 10; i++) {
@@ -19,5 +25,21 @@ function gogodan() {
     }
 
     // 출력
+    resultDiv.innerHTML = table;
+}
+
+// 전체 출력
+function gogodanAll() {
+    const resultDiv = document.getElementById('result');
+
+    let table = '';
+
+    for (let i = 1; i < 10; i++) {
+        table += '<h2>' + i + ' 단</h2>';
+        for (let j = 1; j < 10; j++) {
+            table += `${i} x ${j} = ${i * j}<br>`;
+        }
+    }
+    
     resultDiv.innerHTML = table;
 }
