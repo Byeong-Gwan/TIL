@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>게시판</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../notice_board_writePage/js/css/write.css">
+  </head>
+  <body>
+    <h1>게시판</h1>
+
+    <h2>새 게시글 작성</h2>
+    <form id="new-post-form">
+      <div>
+        <label for="post-title">제목</label>
+        <input type="text" id="post-title" name="post-title" required>
+      </div>
+      <div>
+        <label for="post-content">내용</label>
+        <textarea id="post-content" name="post-content" required></textarea>
+      </div>
+      <button type="submit" class="main-page-go">작성</button>
+    </form>
+
+    <h2>게시글 목록</h2>
+    <button id="post-toggle">게시판 목록</button>
+    <div id="post-container">
+      <ul id="post-list"></ul>
+    </div>
+
+    <script src="../notice_board_writePage/js/write.js"></script>
+  </body>
+</html>
