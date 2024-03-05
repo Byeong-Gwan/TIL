@@ -28,7 +28,6 @@ function gogodan() {
     resultDiv.innerHTML = table;
 }
 
-// 전체 출력
 function gogodanAll() {
     const resultDiv = document.getElementById('result');
 
