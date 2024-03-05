@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+textarea {
+    width: calc(100% - 20px); /* 버튼 폭과 텍스트 영역 사이 간격을 고려하여 계산 */
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#save-btn {
+    display: block; /* 버튼을 블록 요소로 지정하여 줄 바꿈 추가 */
+    width: 100%;
+    margin-bottom: 10px; /* 버튼 아래 여백 추가 */
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#save-btn:hover {
+    background-color: #45a049;
+}
+
+.memo {
+    position: relative;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    overflow: auto; /* 내용이 넘칠 경우 스크롤을 생성 */
+}
+
+.delete-button,
+.edit-button {
+    position: absolute;
+    top: 5px;
+    
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.edit-button {
+    right: 50px; /* 삭제 버튼을 오른쪽에 배치 */
+    background-color: skyblue;
+}
+
+.delete-button {
+    right: 5px; /* 수정 버튼을 오른쪽에 배치 */
+    background-color: #f44336;
+}
+
+.delete-button:hover,
+.edit-button:hover {
+    background-color: #d32f2f;
+}
