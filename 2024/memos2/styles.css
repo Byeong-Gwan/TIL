@@ -5,15 +5,15 @@ body {
 }
 
 textarea {
-    width: calc(100% - 20px); /* 버튼 폭과 텍스트 영역 사이 간격을 고려하여 계산 */
+    width: calc(100% - 20px); 
     padding: 10px;
     margin-bottom: 10px;
 }
 
 #save-btn {
-    display: block; /* 버튼을 블록 요소로 지정하여 줄 바꿈 추가 */
+    display: block; 
     width: 100%;
-    margin-bottom: 10px; /* 버튼 아래 여백 추가 */
+    margin-bottom: 10px; 
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -30,14 +30,16 @@ textarea {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
-    overflow: auto; /* 내용이 넘칠 경우 스크롤을 생성 */
+    overflow: auto; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
 }
 
 .delete-button,
 .edit-button {
     position: absolute;
     top: 5px;
-    
     color: white;
     border: none;
     padding: 5px 10px;
@@ -45,16 +47,35 @@ textarea {
 }
 
 .edit-button {
-    right: 50px; /* 삭제 버튼을 오른쪽에 배치 */
+    right: 50px; 
     background-color: skyblue;
 }
 
 .delete-button {
-    right: 5px; /* 수정 버튼을 오른쪽에 배치 */
+    right: 5px; 
     background-color: #f44336;
 }
 
-.delete-button:hover,
-.edit-button:hover {
-    background-color: #d32f2f;
+.memo span {
+    margin-right: 10px; 
 }
+
+.memo .text {
+    flex-grow: 5; 
+    max-width: 400px; /* 텍스트 최대 길이 제한 */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* 너무 긴 텍스트를 생략 (...) 처리 */
+}
+
+.memo .data {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* 너무 긴 텍스트를 생략 (...) 처리 */
+    margin-right: 100px;
+}
+
+.memo {
+    margin-left: 10px; /* 수정 버튼 간격 수정 */
+}
+

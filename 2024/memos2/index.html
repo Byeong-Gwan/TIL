@@ -8,10 +8,17 @@
 </head>
 <body>
     <textarea id="memos-text" rows="10" cols="50"></textarea><br>
-    <select>
-        <option>오름차순</option>
-        <option>내림차순</option>
+    <select id="updown">
+        <option id="up">오름차순</option>
+        <option id="down">내림차순</option>
     </select>
+    <input type="radio" value="index">
+    <label>index</label>
+    <input type="radio" value="text">
+    <label>내용</label>
+    <input type="radio" value="data">
+    <label>날짜</label>
+
     <button id="save-btn">저장</button>
     <br><div id="memo-list"></div>
 
