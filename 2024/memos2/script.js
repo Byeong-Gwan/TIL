@@ -9,8 +9,14 @@ let memos = [];
 // event
 function bindEvent() {
     document.getElementById('save-btn').addEventListener('click', saveMemo);
-    // document.getElementById('
+    document.getElementById('updown').addEventListener('change',sortMemos);
 }
+
+function init () {
+    bindEvent();
+}
+
+window.onload = init;
 
 // 저장 버튼 클릭시 실행 함수
 function saveMemo() {
@@ -23,25 +29,83 @@ function saveMemo() {
         const newMemo = {
             index: memos.length,
             text: memoText,
-            date: new Date().toLocaleString()
+            date: new Date()
         };
-
-        // 신�� 메모 배열에 추가 
         memos.push(newMemo);
-
         memos.sort((a, b) => a.date - b.date);
-
         renderMemoList();
-
-        memoInput.value = '';
-
+    } else {
+        alert('메시지를 입력해 주세요.');
     }
+    memoInput.value = '';
+}
+
+function sortMemos() {
+    const memoValue = document.getElementById('updown').value;
+    console.log('memoValue', memoValue);
+    debugger;
+    const memoSort = document.querySelector('input[name="option"]:checked').value;
+    console.log('memoSort', memoSort);
+    // memos.memoValue = memoValue.options[memoValue.selectedIndex].value;
+
+    // if(memo)
+    if(memoValue === 'up') {
+        if(memoSort === 'index') {
+            upIndex();
+        } else if(memoSort === 'text') {
+            upText();
+        } else if(memoSort === 'date') {
+            upDate();
+        }
+    } else {
+        if(memoSort === 'index') {
+            downIndex();
+        } else if(memoSort === 'text') {
+            downText();
+        } else if(memoSort === 'date') {
+            downDate();
+        }
+    } 
+    renderMemoList();
+}
+
+// index 일 때 오름차순, 내림 차순 처리
+function upIndex() {
+    memos.sort((a, b) => a.index - b.index);
+    // renderMemoList();
+}
+
+function downIndex() {
+    memos.sort((a, b) => b.index - a.index);
+    // renderMemoList();
+}
+
+function upText() {
+    memos.sort((a, b) => a.text.localeCompare(b.text));
+    // renderMemoList();
+}
+
+function downText() {
+    memos.sort((a, b) => b.text.localeCompare(a.text));
+    // renderMemoList();
+}
+
+function upDate() {
+    memos.sort((a, b) => a.date - b.date);
+    // renderMemoList();
+}
+
+function downDate() {
+    memos.sort((a, b) => b.date - a.date);
+    // renderMemoList();
 }
 
 // 메모 삭제 함수
 function deleteMemo(index) {
     memos.splice(index, 1);
-    addIndex();
+    memos.forEach((memo, index) => {
+        memo.index = index;
+    });
     renderMemoList();
 }
 
@@ -51,20 +115,20 @@ function editMemo(index) {
     const memoText = prompt('메모를 수정하세요: ', memoIndex.text);
     if (memoText !== null && memoText.trim() !== '') {
         // addIndex(index, memoText)
-        renderMemoList();
+        if (memoIndex) {
+            memoIndex.text = memoText;
+        } else {
+            const newMemo = {
+                index: memos.length,
+                text: memoText,
+                date: new Date()
+            }
+            memos.push(newMemo);
+        }
     }
-
+    sortMemos();
+    renderMemoList();
 }
-
-// index 값 추가 함수
-function addIndex() {
-    memos.forEach((memo, index) => {
-        memo.index = index;
-    })
-}
-
-
-
 
 // 메모 목록을 표시하는 함수
 function renderMemoList() {
@@ -90,8 +154,8 @@ function renderMemoList() {
         memoItem.appendChild(memoText);
 
         const memoDate = document.createElement('span');
-        memoDate.textContent = `${memo.date}`;
-        memoDate.classList.add('data');
+        memoDate.textContent = `${memo.date.toLocaleString()}`;
+        memoDate.classList.add('date');
         memoItem.appendChild(memoDate);
 
         // 삭제 버튼 추가
@@ -116,4 +180,4 @@ function renderMemoList() {
 renderMemoList();
 
 // 저장 버튼에 이벤트 리스너 추가
-bindEvent(); // 이벤트 함수 호출
+// bindEvent(); // 이벤트 함수 호출
