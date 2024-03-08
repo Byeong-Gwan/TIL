@@ -48,57 +48,67 @@ function sortMemos() {
     console.log('memoSort', memoSort);
     // memos.memoValue = memoValue.options[memoValue.selectedIndex].value;
 
-    // if(memo)
-    if(memoValue === 'up') {
-        if(memoSort === 'index') {
-            upIndex();
-        } else if(memoSort === 'text') {
-            upText();
-        } else if(memoSort === 'date') {
-            upDate();
-        }
-    } else {
-        if(memoSort === 'index') {
-            downIndex();
-        } else if(memoSort === 'text') {
-            downText();
-        } else if(memoSort === 'date') {
-            downDate();
-        }
-    } 
+    const sortObjec = {
+        'index': (a, b) => a.index - b.index,
+        'text': (a, b) => a.text.localeCompare(b.text),
+        'date': (a, b) => a.date - b.date
+    }[memoSort];
+
+    if (sortObjec) {
+        memos.sort(memoValue === 'up' ? memoValue : (a, b) => sortObjec(b, a));
+    }
+
+    // // if(memo)
+    // if(memoValue === 'up') {
+    //     if(memoSort === 'index') {
+    //         upIndex();
+    //     } else if(memoSort === 'text') {
+    //         upText();
+    //     } else if(memoSort === 'date') {
+    //         upDate();
+    //     }
+    // } else {
+    //     if(memoSort === 'index') {
+    //         downIndex();
+    //     } else if(memoSort === 'text') {
+    //         downText();
+    //     } else if(memoSort === 'date') {
+    //         downDate();
+    //     }
+    // } 
     renderMemoList();
 }
 
 // index 일 때 오름차순, 내림 차순 처리
-function upIndex() {
-    memos.sort((a, b) => a.index - b.index);
-    // renderMemoList();
-}
+// function upIndex() {
+//     memos.sort((a, b) => a.index - b.index);
+//     // renderMemoList();
+// }
 
-function downIndex() {
-    memos.sort((a, b) => b.index - a.index);
-    // renderMemoList();
-}
+// function downIndex() {
+//     memos.sort((a, b) => b.index - a.index);
+//     // renderMemoList();
+// }
 
-function upText() {
-    memos.sort((a, b) => a.text.localeCompare(b.text));
-    // renderMemoList();
-}
+// function upText() {
+//     memos.sort((a, b) => a.text.localeCompare(b.text));
+//     // renderMemoList();
+// }
 
-function downText() {
-    memos.sort((a, b) => b.text.localeCompare(a.text));
-    // renderMemoList();
-}
+// function downText() {
+//     memos.sort((a, b) => b.text.localeCompare(a.text));
+//     // renderMemoList();
+// }
 
-function upDate() {
-    memos.sort((a, b) => a.date - b.date);
-    // renderMemoList();
-}
+// function upDate() {
+//     memos.sort((a, b) => a.date - b.date);
+//     // renderMemoList();
+// }
 
-function downDate() {
-    memos.sort((a, b) => b.date - a.date);
-    // renderMemoList();
-}
+// function downDate() {
+//     memos.sort((a, b) => b.date - a.date);
+//     // renderMemoList();
+// }
 
 // 메모 삭제 함수
 function deleteMemo(index) {
