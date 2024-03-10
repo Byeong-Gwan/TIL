@@ -10,6 +10,12 @@ let memos = [];
 function bindEvent() {
     document.getElementById('save-btn').addEventListener('click', saveMemo);
     document.getElementById('updown').addEventListener('change',sortMemos);
+    document.getElementById('scales').addEventListener('change',function() {
+        const checkeds = document.querySelectorAll('.inputChecked');
+        checkeds.forEach(checkBox => {
+            checkBox.checked = document.getElementById('scales').checked;
+        });
+    });
 }
 
 function init () {
@@ -152,9 +158,14 @@ function renderMemoList() {
         memoItem.classList.add('memo');
         memoList.appendChild(memoItem); // 'memo-list' 자식 으로 div 생성
 
+        const checkedInput = document.createElement('input');
+        checkedInput.type = 'checkbox';
+        checkedInput.classList.add('inputChecked');
+        memoItem.appendChild(checkedInput);
+
         // span 태그로 index, text, date 로 생성해서 추가
         const memoIndex = document.createElement('span');
-        memoIndex.textContent = `${memo.index + 1}`;
+        memoIndex.textContent = `${memo.index + 1 + '.'}`;
         memoIndex.classList.add('index');
         memoItem.appendChild(memoIndex);
 
