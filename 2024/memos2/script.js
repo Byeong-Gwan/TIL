@@ -1,52 +1,39 @@
-/**
- *  1. new Date() 로 오름차순, 내림차순 적용하기
-*  2. 작성된 list에 index 값 추가하여 오름차순, 내림차순 적용하기
-*/
-
 // memo 저장될 빈 배열 선언 
 let memos = [];
 
 // event
-// event
 function bindEvent() {
     document.getElementById('save-btn').addEventListener('click', saveMemo);
     document.getElementById('updown').addEventListener('change',sortMemos);
-    document.getElementById('scales').addEventListener('change', function() {
-        // this => <input type=​"checkbox" id=​"scales" name=​"scales">​ checked 추가
+    document.getElementById('scales').addEventListener('change', function () {
         const isChecked = this.checked;
-        console.log('this', this); 
-        console.log('isChecked', this.isChecked);
-        // 전체 클릭 시 메모 목록에 있는 모두 checked 로 전황
+        console.log('this', this);
         const checkboxes = document.querySelectorAll('.inputChecked');
+    
         checkboxes.forEach(checkbox => {
             checkbox.checked = isChecked;
         });
-
-        // 개별 메모의 체크박스 이벤트 리스너 추가
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const allCheckbox = document.getElementById('scales');
-                if (!isChecked) {
-                    // 하나라도 체크 해제 시 전체 체크박스 해제
-                    allCheckbox.checked = false;
-                } else {
-                    // [..]스프레드 연산자 사용 (동기로 html 태그 만들어서 배열에 담아서 함수 호출)
-                    const allChecked = [...checkboxes].every(checkbox => checkbox.checked);
-                    // 모든 개별 체크박스가 체크되었을 때 전체 체크박스 체크
-                    allCheckbox.checked = allChecked; 
-                }
-            });
+    });
+    
+    const checkboxes = document.querySelectorAll('.inputChecked');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const allCheckbox = document.getElementById('scales');
+            const allChecked = [...checkboxes].every(checkbox => checkbox.checked);
+            allCheckbox.checked = allChecked;
         });
     });
+    
+    // document.getElementById('scales').addEventListener('click', checkAll);
 }
 
-
-
+// event 초기화
 function init () {
     bindEvent();
 }
 
-window.onload = init;
+// window.onload = bindEvent;
 
 // 저장 버튼 클릭시 실행 함수
 function saveMemo() {
@@ -70,6 +57,7 @@ function saveMemo() {
     memoInput.value = '';
 }
 
+// 오름/ 내림차순 처리
 function sortMemos() {
     const memoValue = document.getElementById('updown').value;
     console.log('memoValue', memoValue);
@@ -170,6 +158,39 @@ function editMemo(index) {
     renderMemoList();
 }
 
+// '전체' check 처리 && 하나라도 해지 시 처리
+function checkAll() {
+// check 전체 선택 시 start=================================================
+//     // this => <input type=​"checkbox" id=​"scales" name=​"scales">​ checked 추가
+//     const isChecked = this.checked;
+//     console.log('this', this); 
+//     // 전체 클릭 시 메모 목록에 있는 모두 checked 로 전황
+//     const checkboxes = document.querySelectorAll('.inputChecked');
+//     checkboxes.forEach(checkbox => {
+//         checkbox.checked = isChecked;
+//     });
+// // check 전체 선택 시 end===================================================
+
+// // check 전체 선택 후 한개만 해지 시 start===================================================
+//     // 개별 메모의 체크박스 이벤트 리스너 추가
+//     checkboxes.forEach(checkbox => {
+//         checkbox.addEventListener('change', function() {
+//             const allCheckbox = document.getElementById('scales');
+//             if (!isChecked) {
+//                 // 하나라도 체크 해제 시 전체 체크박스 해제
+//                 allCheckbox.checked = false;
+//             } else {
+//                 // [..]스프레드 연산자 사용 (동기로 html 태그 만들어서 배열에 담아서 함수 호출)
+//                 const allChecked = [...checkboxes].every(checkbox => checkbox.checked);
+//                 // 모든 개별 체크박스가 체크되었을 때 전체 체크박스 체크
+//                 allCheckbox.checked = allChecked; 
+//             }
+//         });
+//     });
+// check 전체 선택 후 한개만 해지 시 end===================================================
+// renderMemoList();
+}
+
 // 메모 목록을 표시하는 함수
 function renderMemoList() {
     const memoList = document.getElementById('memo-list');
@@ -222,7 +243,5 @@ function renderMemoList() {
 }
 
 // 초기화
-renderMemoList();
-
-// 저장 버튼에 이벤트 리스너 추가
-// bindEvent(); // 이벤트 함수 호출
+// renderMemoList();
+bindEvent();

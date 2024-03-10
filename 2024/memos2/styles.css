@@ -79,3 +79,13 @@ textarea {
     margin-left: 10px; /* 수정 버튼 간격 수정 */
 }
 
+#delete-btn {
+    right: 50px; 
+    background-color: red;
+    position: absolute;
+    top: 5px;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
