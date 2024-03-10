@@ -1,22 +1,46 @@
 /**
  *  1. new Date() 로 오름차순, 내림차순 적용하기
- *  2. 작성된 list에 index 값 추가하여 오름차순, 내림차순 적용하기
- */
+*  2. 작성된 list에 index 값 추가하여 오름차순, 내림차순 적용하기
+*/
 
 // memo 저장될 빈 배열 선언 
 let memos = [];
 
 // event
+// event
 function bindEvent() {
     document.getElementById('save-btn').addEventListener('click', saveMemo);
     document.getElementById('updown').addEventListener('change',sortMemos);
-    document.getElementById('scales').addEventListener('change',function() {
-        const checkeds = document.querySelectorAll('.inputChecked');
-        checkeds.forEach(checkBox => {
-            checkBox.checked = document.getElementById('scales').checked;
+    document.getElementById('scales').addEventListener('change', function() {
+        // this => <input type=​"checkbox" id=​"scales" name=​"scales">​ checked 추가
+        const isChecked = this.checked;
+        console.log('this', this); 
+        console.log('isChecked', this.isChecked);
+        // 전체 클릭 시 메모 목록에 있는 모두 checked 로 전황
+        const checkboxes = document.querySelectorAll('.inputChecked');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+
+        // 개별 메모의 체크박스 이벤트 리스너 추가
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const allCheckbox = document.getElementById('scales');
+                if (!isChecked) {
+                    // 하나라도 체크 해제 시 전체 체크박스 해제
+                    allCheckbox.checked = false;
+                } else {
+                    // [..]스프레드 연산자 사용 (동기로 html 태그 만들어서 배열에 담아서 함수 호출)
+                    const allChecked = [...checkboxes].every(checkbox => checkbox.checked);
+                    // 모든 개별 체크박스가 체크되었을 때 전체 체크박스 체크
+                    allCheckbox.checked = allChecked; 
+                }
+            });
         });
     });
 }
+
+
 
 function init () {
     bindEvent();
@@ -31,7 +55,7 @@ function saveMemo() {
 
     if (memoText.trim() !== '') {
 
-        // 객체 생성 index, text, Data 추가
+       // 객체 생성 index, text, Data 추가
         const newMemo = {
             index: memos.length,
             text: memoText,
@@ -52,7 +76,7 @@ function sortMemos() {
     debugger;
     const memoSort = document.querySelector('input[name="option"]:checked').value;
     console.log('memoSort', memoSort);
-    // memos.memoValue = memoValue.options[memoValue.selectedIndex].value;
+   // memos.memoValue = memoValue.options[memoValue.selectedIndex].value;
 
     const sortObjec = {
         'index': (a, b) => a.index - b.index,
@@ -64,24 +88,24 @@ function sortMemos() {
         memos.sort(memoValue === 'up' ? memoValue : (a, b) => sortObjec(b, a));
     }
 
-    // // if(memo)
-    // if(memoValue === 'up') {
-    //     if(memoSort === 'index') {
-    //         upIndex();
-    //     } else if(memoSort === 'text') {
-    //         upText();
-    //     } else if(memoSort === 'date') {
-    //         upDate();
-    //     }
-    // } else {
-    //     if(memoSort === 'index') {
-    //         downIndex();
-    //     } else if(memoSort === 'text') {
-    //         downText();
-    //     } else if(memoSort === 'date') {
-    //         downDate();
-    //     }
-    // } 
+   // // if(memo)
+   // if(memoValue === 'up') {
+   //     if(memoSort === 'index') {
+   //         upIndex();
+   //     } else if(memoSort === 'text') {
+   //         upText();
+   //     } else if(memoSort === 'date') {
+   //         upDate();
+   //     }
+   // } else {
+   //     if(memoSort === 'index') {
+   //         downIndex();
+   //     } else if(memoSort === 'text') {
+   //         downText();
+   //     } else if(memoSort === 'date') {
+   //         downDate();
+   //     }
+   // } 
     renderMemoList();
 }
 
@@ -186,7 +210,7 @@ function renderMemoList() {
         deleteButton.addEventListener('click', () => deleteMemo(index)); // 삭제 이벤트 발생
         memoItem.appendChild(deleteButton); // div 자식으로 button 생성
 
-        // 수정 버튼 추가
+       // 수정 버튼 추가
         const editButton = document.createElement('button');
         editButton.textContent = '수정';
         editButton.classList.add('edit-button'); // 수정 버튼에 클래스 추가
