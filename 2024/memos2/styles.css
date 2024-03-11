@@ -25,6 +25,14 @@ textarea {
     background-color: #45a049;
 }
 
+.delete-all-button {
+    margin-right: auto;
+    padding-left: 100px;
+
+    color: white;
+    right: 50px
+}
+
 .memo {
     position: relative;
     border: 1px solid #ccc;
@@ -79,13 +87,10 @@ textarea {
     margin-left: 10px; /* 수정 버튼 간격 수정 */
 }
 
-#delete-btn {
-    right: 50px; 
+.delete-all-button {
+    /* right: 50px;  */
     background-color: red;
-    position: absolute;
-    top: 5px;
-    color: white;
-    border: none;
-    padding: 5px 10px;
+    left: 10px ;
+    padding: 10px 10px;
     cursor: pointer;
 }

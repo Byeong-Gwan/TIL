@@ -1,64 +1,34 @@
-// memo 저장될 빈 배열 선언 
-let memos = [];
+let memos = [];// memo 저장될 빈 배열 선언 
 
-function checkSelectAll() {
-    // 전체 체크박스
+// event
+// '전체' 체크박스와 개별 체크박스 동기화
+function checkAll() {
+    const allCheckbox = document.getElementById('scales');
+    const isChecked = allCheckbox.checked;
     const checkboxes = document.querySelectorAll('.inputChecked');
-    // 선택된 체크박스
-    const checked = document.querySelectorAll('.inputChecked:checked');
-    // select all 체크박스
-    const selectAll = document.querySelector('input[name="scales"]');
-
-    if (checkboxes.length === checked.length) {
-        selectAll.checked = true;
-    } else {
-        selectAll.checked = false;
-    }
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = isChecked;
+    });
 }
 
-function selectAll(selectAll) {
+// 개별 체크박스 변경 시 '전체' 체크박스 상태 갱신
+function updateCheckAll() {
+    const allCheckbox = document.getElementById('scales');
     const checkboxes = document.querySelectorAll('.inputChecked');
-
-    checkboxes.forEach((checkbox) => {
-        checkbox.checked = selectAll.checked;
-    });
+    const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+    allCheckbox.checked = allChecked;
 }
 
 // event 초기화
 function bindEvent() {
     document.getElementById('save-btn').addEventListener('click', saveMemo);
     document.getElementById('updown').addEventListener('change', sortMemos);
+
+    // 라디오 버튼 이벤트 리스너 추가
     const radioInputs = document.querySelectorAll('input[name="option"]');
     radioInputs.forEach(input => {
         input.addEventListener('change', sortMemos);
     });
-
-   const checkbox = document.querySelectorAll('.inputChecked');
-   checkbox.forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-        console.log('개별 체크박스가 변경되었습니다.');
-        const allCheckbox = document.getElementById('scales');
-        const checkboxes = document.querySelectorAll('.inputChecked');
-        const isChecked = checkboxes.length === document.querySelectorAll('.inputChecked:checked').length;
-
-        allCheckbox.checked = isChecked;
-    });
-});
-
-    
-    document.getElementById('scales').addEventListener('change', function () {
-        console.log('전체 체크박스가 변경되었습니다.');
-        const isChecked = this.checked;
-        const checkboxes = document.querySelectorAll('.inputChecked');
-    
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = isChecked;
-        });
-    });
-    
-    
-
-    
 
     // '전체' 체크박스와 동일한 위치에 전체 삭제 버튼 추가
     const scalesLabel = document.querySelector('label[for="scales"]');
@@ -67,40 +37,25 @@ function bindEvent() {
     deleteAllButton.classList.add('delete-all-button');
     deleteAllButton.addEventListener('click', deleteAllMemos);
     scalesLabel.parentNode.insertBefore(deleteAllButton, scalesLabel.nextSibling);
+    
+    // '전체' 체크박스 이벤트 리스너 추가
+    const allCheckbox = document.getElementById('scales');
+    allCheckbox.addEventListener('change', checkAll);
+
+    // 개별 체크박스 이벤트 리스너 추가
+    const checkboxes = document.querySelectorAll('.inputChecked');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateCheckAll);
+    });
 }
+
+// 초기화
+init();
+
 
 // event 초기화
 function init () {
     bindEvent();
-}
-
-function test() {
-    // console.log('개별 체크박스가 변경되었습니다.');
-        const allCheckbox = document.getElementById('scales');
-        const checkboxes = document.querySelectorAll('.inputChecked');
-        const isChecked = checkboxes.length === document.querySelectorAll('.inputChecked:checked').length;
-
-        for(let i = 0; i < allCheckbox.length; i++) {
-            if(allCheckbox[i].checked === isChecked) {
-                console.log('전체 체크박스가 변경되었습니다.');
-    
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = isChecked;})
-            } else if(allCheckbox[i].checked !== isChecked) {
-                console.log('개별 체크박스가 변경되었습니다.');
-                allCheckbox[i].checked = isChecked;
-            } 
-        }
-
-        // allCheckbox.checked = isChecked;
-
-
-        // console.log('전체 체크박스가 변경되었습니다.');
-    
-        // checkboxes.forEach(checkbox => {
-        //     checkbox.checked = isChecked;})
-        
-    
 }
 
 // window.onload = bindEvent;
