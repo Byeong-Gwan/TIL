@@ -21,14 +21,13 @@ function bindEvent() {
             checkbox.checked = isChecked;
         });
     });
-
+    
 }
 
 // event 초기화
 function init () {
     bindEvent();
 }
-// window.onload = bindEvent;
 
 // 저장 버튼 클릭시 실행 함수
 function saveMemo() {
@@ -77,58 +76,8 @@ function sortMemos() {
         });
         renderMemoList();
     }
-
-   // // if(memo)
-   // if(memoValue === 'up') {
-   //     if(memoSort === 'index') {
-   //         upIndex();
-   //     } else if(memoSort === 'text') {
-   //         upText();
-   //     } else if(memoSort === 'date') {
-   //         upDate();
-   //     }
-   // } else {
-   //     if(memoSort === 'index') {
-   //         downIndex();
-   //     } else if(memoSort === 'text') {
-   //         downText();
-   //     } else if(memoSort === 'date') {
-   //         downDate();
-   //     }
-   // } 
     renderMemoList();
 }
-
-// index 일 때 오름차순, 내림 차순 처리
-// function upIndex() {
-//     memos.sort((a, b) => a.index - b.index);
-//     // renderMemoList();
-// }
-
-// function downIndex() {
-//     memos.sort((a, b) => b.index - a.index);
-//     // renderMemoList();
-// }
-
-// function upText() {
-//     memos.sort((a, b) => a.text.localeCompare(b.text));
-//     // renderMemoList();
-// }
-
-// function downText() {
-//     memos.sort((a, b) => b.text.localeCompare(a.text));
-//     // renderMemoList();
-// }
-
-// function upDate() {
-//     memos.sort((a, b) => a.date - b.date);
-//     // renderMemoList();
-// }
-
-// function downDate() {
-//     memos.sort((a, b) => b.date - a.date);
-//     // renderMemoList();
-// }
 
 // 메모 삭제 함수
 function deleteMemo(index) {
@@ -136,7 +85,6 @@ function deleteMemo(index) {
     memos.forEach((memo, index) => {
         memo.index = index;
     });
-    // renderMemoList();
 }
 
 // 메모 수정 함수
@@ -188,15 +136,24 @@ function renderMemoList() {
         const checkedInput = document.createElement('input');
         checkedInput.type = 'checkbox';
         checkedInput.classList.add('inputChecked');
-        const inputChecked = memoItem.appendChild(checkedInput);
-        inputChecked.addEventListener('change', function() {
-            console.log('개별 체크함');
+        const inputElement = memoItem.appendChild(checkedInput); // event 값 할당
+        /**
+         * (method) Node.appendChild<HTMLInputElement>(node: HTMLInputElement): HTMLInputElement
+            method: function
+            Node: memoItem type
+            appendChild: 자식요소 추가 함수
+            <HTMLInputElement>: 제네이릭
+            (node: HTMLInputElement): Input 값
+            :  HTMLInputElement: Output 값
+         */
+        inputElement.addEventListener('change', function () { 
+            console.log('개별 체크박스가 변경되었습니다.');
             const allCheckbox = document.getElementById('scales');
             const checkboxes = document.querySelectorAll('.inputChecked');
-            const isChecked = checkboxes.checked === document.querySelectorAll('.inputChecked:checked').length;
+            const isChecked = checkboxes.length === document.querySelectorAll('.inputChecked:checked').length;
 
-            allCheckbox.checked = isChecked;
-        })
+            allCheckbox.checked = isChecked
+        });
 
         // span 태그로 index, text, date 로 생성해서 추가
         const memoIndex = document.createElement('span');
@@ -229,7 +186,6 @@ function renderMemoList() {
         memoItem.appendChild(editButton); // div 자식으로 button 생성
 
     }); 
-
 }
 
 // 초기화

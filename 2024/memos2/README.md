@@ -92,3 +92,15 @@
     - 해결: 진행중
 
 ### 11. 전체 삭제 버튼 생성 기능 추가
+
+    - (method) Node.appendChild<HTMLInputElement>(node: HTMLInputElement): HTMLInputElement
+        method: function
+        Node: memoItem type
+        appendChild: 자식요소 추가 함수
+        <HTMLInputElement>: 제네이릭
+        (node: HTMLInputElement): Input 값
+        :  HTMLInputElement: Output 값
+        
+### 12. 백엔드 작업 
+
+    - Node Express SQLite 로 작업 예정 

@@ -25,13 +25,6 @@ textarea {
     background-color: #45a049;
 }
 
-.delete-all-button {
-    margin-right: auto;
-    padding-left: 100px;
-
-    color: white;
-    right: 50px
-}
 
 .memo {
     position: relative;
@@ -85,12 +78,4 @@ textarea {
 
 .memo {
     margin-left: 10px; /* 수정 버튼 간격 수정 */
-}
-
-.delete-all-button {
-    /* right: 50px;  */
-    background-color: red;
-    left: 10px ;
-    padding: 10px 10px;
-    cursor: pointer;
 }
