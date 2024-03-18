@@ -1,36 +1,41 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // 메모 목록 불러오기
-    fetchMemos();
+// memo 저장될 빈 배열 선언 
+let memos = [];
 
-    // 저장 버튼에 이벤트 리스너 추가
+// event 초기화
+function bindEvent() {
     document.getElementById('save-btn').addEventListener('click', saveMemo);
-
-    // 오름/내림차순, 정렬 기준 변경 이벤트 리스너 추가
     document.getElementById('updown').addEventListener('change', sortMemos);
     const radioInputs = document.querySelectorAll('input[name="option"]');
     radioInputs.forEach(input => {
         input.addEventListener('change', sortMemos);
     });
 
-    // 전체 삭제 버튼에 이벤트 리스너 추가
     document.getElementById('delete-all-button').addEventListener('click', deleteAllMemos);
 
-    // 전체 선택/해제 체크박스 이벤트 리스너 추가
     document.getElementById('scales').addEventListener('change', function () {
+        console.log('전체 체크박스가 변경되었습니다.');
         const isChecked = this.checked;
         const checkboxes = document.querySelectorAll('.inputChecked');
+    
         checkboxes.forEach(checkbox => {
             checkbox.checked = isChecked;
         });
     });
-});
+    
+}
+
+// event 초기화
+function init () {
+    bindEvent();
+    fetchMemos(); // 페이지 로드시 메모 불러오기
+}
 
 // 메모 저장 함수
 function saveMemo() {
     const memoInput = document.getElementById('memos-text');
     const memoText = memoInput.value.trim();
 
-    if (memoText !== '') {
+    if (memoText.trim() !== '') {
         // 서버에 POST 요청 보내기
         fetch('/memos', {
             method: 'POST',
@@ -64,14 +69,18 @@ function saveMemo() {
 function fetchMemos() {
     // 서버에서 GET 요청으로 메모 목록 가져오기
     fetch('/memos')
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('메모 목록을 불러오는 데 실패했습니다.');
+        }
+        return response.json();
+    })
     .then(data => {
         console.log(data);
         renderMemoList(data);
     })
     .catch(error => console.error('Error:', error));
 }
-
 // 메모 목록 렌더링 함수
 function renderMemoList(memos) {
     const memoList = document.getElementById('memo-list');
@@ -113,38 +122,12 @@ function renderMemoList(memos) {
     });
 }
 
-// 메모 정렬 함수
-function sortMemos() {
-    const memoValue = document.getElementById('updown').value;
-    const memoSort = document.querySelector('input[name="option"]:checked').value;
-
-    // 서버에 정렬 기준과 방향을 전송
-    fetch(`/memos?sortBy=${memoSort}&order=${memoValue}`)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        renderMemoList(data);
-    })
-    .catch(error => console.error('Error:', error));
-}
-
 // 메모 삭제 함수
 function deleteMemo(index) {
-    // 서버에 삭제할 메모의 인덱스를 전송
-    fetch(`/memos/${index}`, {
-        method: 'DELETE'
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('메모 삭제에 실패했습니다.');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        fetchMemos();
-    })
-    .catch(error => console.error('Error:', error));
+    memos.splice(index, 1);
+    memos.forEach((memo, index) => {
+        memo.index = index;
+    });
 }
 
 // 전체 메모 삭제 함수
@@ -172,3 +155,4 @@ function deleteAllMemos() {
     })
     .catch(error => console.error('Error:', error));
 }
+

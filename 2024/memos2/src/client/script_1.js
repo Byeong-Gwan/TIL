@@ -27,24 +27,54 @@ function bindEvent() {
 // event 초기화
 function init () {
     bindEvent();
+    fetchMemos();
+}
+
+// 메모 리스트를 가져와서 화면에 표시하는 함수
+function fetchMemos () {
+    fetch('/memoList') // 서버로 요청을 보냄
+    .then(response => response.json()) // 응답을 JSON 형태로 변환
+    .then(date => {
+        // 서버로 부터 받은 메모 데이터 화면에 표시
+        memos = date;
+        renderMemoList();
+    })
+    .catch(error => {
+        console.error('데이터를 불러오는 중 오류 발생:', error);
+    });    
 }
 
 // 저장 버튼 클릭시 실행 함수
 function saveMemo() {
     const memoInput = document.getElementById('memos-text');
     const memoText = memoInput.value;
-
+    const memoDate = new Date().toLocaleString(); // 현재 날짜 시간 생성
+    debugger;
     if (memoText.trim() !== '') {
-
-       // 객체 생성 index, text, Data 추가
-        const newMemo = {
-            index: memos.length,
-            text: memoText,
-            date: new Date()
-        };
-        memos.push(newMemo);
-        memos.sort((a, b) => a.date - b.date);
-        renderMemoList();
+        fetch('/memoList', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: memoText,
+                date: memoDate
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('메모 추가에 실패했습니다.');
+            }
+            return response.json();
+        })
+        .then(date => {
+            console.log('새로운 메모가 추가되었습니다.', date);
+            fetchMemos();
+            renderMemoList();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     } else {
         alert('메시지를 입력해 주세요.');
     }
